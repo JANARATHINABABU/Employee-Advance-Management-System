@@ -1,0 +1,36 @@
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #printableArea, #printableArea * {
+        visibility: visible;
+    }
+    #printableArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        display: block !important;
+    }
+    
+    /* Table Print Borders & Layout */
+    .print-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .print-table th, .print-table td {
+        border: 1px solid #000 !important;
+        padding: 8px 10px;
+        text-align: center;
+        font-size: 13px;
+    }
+    .print-table th {
+        background-color: #f2f2f2 !important;
+        -webkit-print-color-adjust: exact;
+    }
+    .print-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}

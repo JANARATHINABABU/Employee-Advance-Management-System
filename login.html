@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Employee Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-body">
+    <div class="login-card">
+        <h2>Employee Management System</h2>
+        <p class="subtitle">Sign In</p>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+
+        <div class="forgot-pass-container">
+            <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+        </div>
+
+        <div id="forgotModal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-btn" id="closeModal">&times;</span>
+                <h3>Reset Password</h3>
+                <form id="forgotForm">
+                    <div class="form-group">
+                        <label for="resetEmail">Email Address</label>
+                        <input type="email" id="resetEmail" placeholder="Enter registered email" required>
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-block">Send Reset OTP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+</body>
+</html>

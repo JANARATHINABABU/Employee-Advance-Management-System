@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMPLOYEE ADVANCE MANAGEMENT SYSTEM</title>
+    
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,ta,hi,te,ml,kn',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --header-bg: #0f172a;
+            --header-text: #ffffff;
+            --sidebar-bg: #1e293b;
+            --sidebar-text: #94a3b8;
+            --sidebar-active: #2563eb;
+            --border-color: #cbd5e1;
+            --table-header: #2563eb;
+            --input-bg: #ffffff;
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --card-bg: #1e293b;
+            --header-bg: #020617;
+            --header-text: #ffffff;
+            --sidebar-bg: #020617;
+            --sidebar-text: #94a3b8;
+            --sidebar-active: #3b82f6;
+            --border-color: #334155;
+            --table-header: #1d4ed8;
+            --input-bg: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            width: 100%;
+        }
+
+        .navbar h1 {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .top-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .top-controls button {
+            padding: 7px 14px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: #ffffff;
+            color: #0f172a;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        /* Delete & Logout Button Styles */
+        .btn-danger {
+            background-color: #ef4444 !important;
+            color: #ffffff !important;
+            border: none !important;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626 !important;
+        }
+
+        .main-layout {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            padding: 20px 0;
+            flex-shrink: 0;
+        }
+
+        .nav-tabs {
+            list-style: none;
+        }
+
+        .tab-link {
+            padding: 14px 25px;
+            color: var(--sidebar-text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 4px solid transparent;
+        }
+
+        .tab-link:hover {
+            background: rgba(255,255,255,0.05);
+            color: #ffffff;
+        }
+
+        .tab-link.active {
+            background: var(--sidebar-active);
+            color: #ffffff;
+            border-left-color: #60a5fa;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            background-color: var(--bg-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-header h2 {
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: var(--card-bg);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .styled-table th {
+            background-color: var(--table-header);
+            color: #ffffff;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .styled-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-color);
+        }
+
+        input, select {
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-primary { background-color: #2563eb; color: #fff; }
+        .btn-info { background-color: #0284c7; color: #fff; }
+        .btn-success { background-color: #16a34a; color: #fff; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 25px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 750px;
+            border: 1px solid var(--border-color);
+        }
+        
+        #printableArea { display: none; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <h1>EMPLOYEE ADVANCE MANAGEMENT SYSTEM</h1>
+        <div class="top-controls">
+            <!-- Google Translate Element -->
+            <div id="google_translate_element"></div>
+            
+            <button id="themeToggleBtn">🌙 Dark Mode</button>
+            <button id="logoutBtn" class="btn-danger">LOGOUT</button>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <ul class="nav-tabs">
+                <li class="tab-link active" data-tab="employees">EMPLOYEES LIST</li>
+                <li class="tab-link" data-tab="entry">DATA ENTRY & ADVANCES</li>
+                <li class="tab-link" data-tab="history">TRANSACTION HISTORY</li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <!-- Employees List Tab -->
+            <section id="tab-employees" class="tab-content card active">
+                <div class="section-header">
+                    <h2>EMPLOYEES LIST</h2>
+                    <button id="printAllBtn" class="btn-sm btn-primary">🖨️ PRINT ALL RECORDS</button>
+                </div>
+                <table class="styled-table" id="employeeTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>TOTAL ADVANCE</th>
+                            <th>TOTAL DEDUCTION</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTableBody"></tbody>
+                </table>
+            </section>
+
+            <!-- Data Entry Tab -->
+            <section id="tab-entry" class="tab-content card">
+                <div class="section-header">
+                    <h2>ADVANCES & DEDUCTIONS ENTRY</h2>
+                </div>
+                <form id="transactionForm" style="max-width: 450px; display: flex; flex-direction: column; gap: 15px;">
+                    <div>
+                        <label style="display:block; margin-bottom: 5px; font-weight:600;">EMPLOYEE NAME</label>
+                        <input type="text" id="empNameInput" style="width: 100%; padding: 10px; border-radius: 4px;" required>
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom: 5px; font-weight:600;">TRANSACTION TYPE</label>
+                        <select id="txType" style="width: 100%; padding: 10px; border-radius: 4px;" required>
+                            <option value="advance">ADD ADVANCE</option>
+                            <option value="deduction">ADD DEDUCTION</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom: 5px; font-weight:600;">AMOUNT (₹)</label>
+                        <input type="number" id="txAmount" placeholder="0.00" style="width: 100%; padding: 10px; border-radius: 4px;" required>
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom: 5px; font-weight:600;">DATE & TIME</label>
+                        <input type="datetime-local" id="txDateTime" style="width: 100%; padding: 10px; border-radius: 4px;" required>
+                    </div>
+                    <button type="submit" class="btn-sm btn-success" style="padding: 12px; font-size: 0.9rem;">SAVE ENTRY</button>
+                </form>
+            </section>
+
+            <!-- Transaction History Tab -->
+            <section id="tab-history" class="tab-content card">
+                <div class="section-header">
+                    <h2>TRANSACTION HISTORY BY YEAR</h2>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <label style="font-weight:600;">SELECT YEAR:</label>
+                        <select id="yearFilter" style="padding: 6px 12px; font-weight: bold;"></select>
+                        <button id="printHistoryBtn" class="btn-sm btn-primary">🖨️ PRINT HISTORY</button>
+                    </div>
+                </div>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>S.NO</th>
+                            <th>DATE & TIME</th>
+                            <th>EMPLOYEE NAME</th>
+                            <th>TYPE</th>
+                            <th>AMOUNT (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody"></tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Analytics Modal -->
+    <div class="modal" id="analyticsModal">
+        <div class="modal-content">
+            <span id="closeAnalyticsModal" style="float: right; cursor: pointer; font-size: 24px; font-weight: bold;">&times;</span>
+            <div id="modalEmpNameHeader"></div>
+            <div style="display: flex; justify-content: space-around; padding: 12px; background: rgba(150,150,150,0.1); border-radius: 6px; margin-bottom: 15px; margin-top: 15px;">
+                <p><strong>TOTAL ADVANCE:</strong> ₹<span id="mAdvance">0</span></p>
+                <p><strong>TOTAL DEDUCTION:</strong> ₹<span id="mDeduction">0</span></p>
+                <p><strong>BALANCE:</strong> ₹<span id="mBalance">0</span></p>
+            </div>
+            <div style="height: 300px;">
+                <canvas id="analyticsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div id="printableArea"></div>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
